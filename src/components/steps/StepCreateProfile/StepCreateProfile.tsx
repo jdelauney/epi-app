@@ -1,13 +1,12 @@
-import { Form } from "../../ui/Form/Form"
-
-import { getRegisterFormConfig } from './registerForm.config.ts';
+import { Form } from '../../ui/Form/Form';
 
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { z } from 'zod';
 
-import { Button } from "../../ui/Button/Button";
-import { InputDataFieldType } from "../../ui/Form/InputFields/inputDataField.type";
-import { extractZodErrorToMessage } from "../../../utils/zod";
+import { Button } from '../../ui/Button/Button';
+import { InputDataFieldType } from '../../ui/Form/InputFields/inputDataField.type';
+import { extractZodErrorToMessage } from '../../../utils/zod';
+import { getRegisterFormConfig } from './registerForm.config';
 
 const registerSchema = z
   .object({
@@ -25,7 +24,7 @@ const registerSchema = z
   });
 
 type RegisterFormDataType = z.infer<typeof registerSchema>;
-export const RegisterForm = () => {
+export const StepCreateProfile = () => {
   const [formData, setFormData] = useState<RegisterFormDataType>({
     email: '',
     password: '',
@@ -69,7 +68,7 @@ export const RegisterForm = () => {
       fields={registerFormConfig}
       onSubmit={handleSubmit}
       onInputChange={handleInputChange}
-      className={'w-full mt-10 pt-10 border-t border-gray-200'}
+      className={'w-full mt-10 pt-10 border-t border-gray-200  px-4'}
     >
       <footer className={'w-full flex justify-center mt-4'}>
         <Button type={'submit'} className={'w-1/2'}>
