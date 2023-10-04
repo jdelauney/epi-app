@@ -1,3 +1,5 @@
+import { Steps } from './components/steps/Steps';
+import { trySteps } from './components/steps/tryStep';
 import { Button } from './components/ui/Button/Button';
 import epiLogo from '/images/EPI_logo.png';
 
@@ -21,15 +23,9 @@ const App = () => {
           </div>
         </div>
       </header>
-      <div className={'w-full bg-slate-500 h-4'}>
-        <div className={'bg-monza-600 h-4 w-1/12'}></div>
-      </div>
+
       <section>
-        <h2 className={'text-3xl md:text-5xl font-serif text-center mt-5'}>
-          Bienvenue au cours
-          <br />
-          d’introduction
-        </h2>
+        <Steps currentStep={3} steps={trySteps} />
         <Button>Enregistrer</Button>
       </section>
     </>
