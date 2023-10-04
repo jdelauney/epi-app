@@ -1,3 +1,4 @@
+import { Button } from './components/ui/Button/Button';
 import epiLogo from '/images/EPI_logo.png';
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
           <br />
           d’introduction
         </h2>
+        <Button>Enregistrer</Button>
       </section>
     </>
   );

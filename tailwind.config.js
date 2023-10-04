@@ -42,7 +42,7 @@ export default {
       pattern: /place-.*/,
     },
     {
-      pattern: /(justify|items|text|animate|space|round|border|font|block|inline|bg|container|md:|lg:|from|to|via).*/,
+      pattern: /(justify|items|text|animate|space|rounded|border|font|block|inline|bg|container|md:|lg:|from|to|via).*/,
     },
     {
       pattern: /(bottom|right|top|left)-[0-9]+/,
