@@ -1,12 +1,16 @@
+import { NavigationActionsInterface } from '../../../../hooks/useFormStepper';
 import { Button } from '../../Button/Button';
 
 type StepperNavigationProps = {
+  navigationActions: NavigationActionsInterface;
   onNext?: () => void;
   onPrev?: () => void;
   onComplete?: () => void;
 };
 
-export const StepperNavigation = ({ onPrev, onNext, onComplete }: StepperNavigationProps) => {
+export const StepperNavigation = ({ navigationActions, onPrev, onNext, onComplete }: StepperNavigationProps) => {
+  const { hasPrev, hasNext, isLast, gotoPrev, gotoNext } = navigationActions;
+
   const handlePrevClick = () => {
     console.log('prev click');
     gotoPrev();
@@ -17,6 +21,7 @@ export const StepperNavigation = ({ onPrev, onNext, onComplete }: StepperNavigat
 
   const handleNextClick = () => {
     console.log('next click');
+    gotoNext();
     if (onNext) {
       onNext();
     }
@@ -30,11 +35,13 @@ export const StepperNavigation = ({ onPrev, onNext, onComplete }: StepperNavigat
   };
   return (
     <footer className={'flex justify-between p-3'}>
-      <Button onClick={handlePrevClick}>Retour</Button>
-      <Button onClick={handleNextClick}>Suivant</Button>
-      <Button type={'submit'} onClick={handleCompleteClick}>
-        Valider
-      </Button>
+      {hasPrev() && <Button onClick={handlePrevClick}>Retour</Button>}
+      {hasNext() && <Button onClick={handleNextClick}>Suivant</Button>}
+      {isLast() && (
+        <Button type={'submit'} onClick={handleCompleteClick}>
+          Valider
+        </Button>
+      )}
     </footer>
   );
 };

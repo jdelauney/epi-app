@@ -1,23 +1,39 @@
-import { ChangeEvent, forwardRef, HTMLAttributes, PropsWithChildren } from 'react';
-import { InputDataFieldType } from './InputFields/inputDataField.type';
-import { InputFields } from './InputFields/InputFields';
+import { ChangeEvent, forwardRef, HTMLAttributes, ReactNode, useEffect, useRef } from 'react';
+import { StepperNavigation } from './StepperNavigation/StepperNavigation';
 import { StepList } from '../../steps/steps.type';
+import { NavigationActionsInterface } from '../../../hooks/useFormStepper';
 
-type FormProps = PropsWithChildren<{
+type FormProps = {
   className?: string;
   steps: StepList;
-  onInputChange: (e: ChangeEvent) => void;
+  currentStep: number;
+  navigationActions: NavigationActionsInterface;
+  //onInputChange: (e: ChangeEvent) => void;
   onSubmit: (e: ChangeEvent<HTMLFormElement>) => void;
-}> &
-  HTMLAttributes<HTMLFormElement>;
+} & HTMLAttributes<HTMLFormElement>;
 
 export const StepperForm = forwardRef(
-  ({ className, steps,  onSubmit, onInputChange, children, ...restOfProps }: FormProps, ref) => {
+  ({ className, steps, currentStep, navigationActions, onSubmit, ...restOfProps }: FormProps, ref) => {
+    const currentStepElementRef = useRef<ReactNode>(null);
+
+    const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      onSubmit(e);
+    };
+
+    useEffect(() => {
+      const getCurrentStep = (): ReactNode => {
+        return steps[currentStep].content;
+      };
+      currentStepElementRef.current = getCurrentStep();
+    }, [currentStep, steps]);
+
     return (
-      <form className={className} onSubmit={onSubmit} {...restOfProps}>            
-        <>{children}</>
+      <form className={className} onSubmit={handleSubmit} {...restOfProps}>
+        {currentStepElementRef.current}
+        <StepperNavigation navigationActions={navigationActions} />
       </form>
     );
   }
 );
-DynamicForm.displayName = 'DynamicForm';
+StepperForm.displayName = 'StepperForm';

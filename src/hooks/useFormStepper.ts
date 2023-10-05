@@ -1,12 +1,16 @@
-import { ReactNode, useState } from 'react';
-import { StepperContextType } from '../contexts/StepperContext';
-import { StepList } from '../components/steps/steps.type';
+import { useState } from 'react';
 
-export const useFormStepper = (dataSteps: StepList) => {
+export interface NavigationActionsInterface {
+  hasPrev: () => boolean;
+  hasNext: () => boolean;
+  isFirst: () => boolean;
+  isLast: () => boolean;
+  gotoNext: () => void;
+  gotoPrev: () => void;
+}
+export const useFormStepper = <T>(data: T, totalSteps: number) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [steps] = useState<StepList>(dataSteps);
-
-  //const stepperContext = useContext(StepContext);
+  const [formData, setFormData] = useState<T>(data);
 
   const gotoPrev = () => {
     if (currentStep > 0) {
@@ -23,7 +27,7 @@ export const useFormStepper = (dataSteps: StepList) => {
   };
 
   const isLast = () => {
-    return currentStep === steps.length - 1;
+    return currentStep === totalSteps - 1;
   };
 
   const hasPrev = (): boolean => {
@@ -31,24 +35,22 @@ export const useFormStepper = (dataSteps: StepList) => {
   };
 
   const hasNext = (): boolean => {
-    return currentStep < steps.length - 1;
+    return currentStep < totalSteps - 1;
   };
 
-  const getCurrentStep = (): ReactNode => {
-    return steps[currentStep].content;
+  const navigationActions: NavigationActionsInterface = {
+    hasPrev,
+    hasNext,
+    isFirst,
+    isLast,
+    gotoNext,
+    gotoPrev,
   };
 
-  const initialStepperContextValue: StepperContextType = {
+  return {
+    navigationActions: navigationActions,
     currentStep: currentStep,
-    setCurrentStep: setCurrentStep,
-    isFirst: isFirst,
-    isLast: isLast,
-    hasPrev: hasPrev,
-    hasNext: hasNext,
-    gotoNext: gotoNext,
-    gotoPrev: gotoPrev,
-    getCurrentStep: getCurrentStep,
+    formData: formData,
+    setFormData: setFormData,
   };
-
-  return [initialStepperContextValue];
 };
