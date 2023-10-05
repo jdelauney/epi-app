@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { ChangeEventHandler, useEffect, useRef, useState } from 'react';
+import { StepList } from '../components/steps/steps.type';
 
 export interface NavigationActionsInterface {
   hasPrev: () => boolean;
@@ -8,49 +9,74 @@ export interface NavigationActionsInterface {
   gotoNext: () => void;
   gotoPrev: () => void;
 }
-export const useFormStepper = <T>(data: T, totalSteps: number) => {
-  const [currentStep, setCurrentStep] = useState<number>(0);
-  const [formData, setFormData] = useState<T>(data);
 
-  const gotoPrev = () => {
+export type ErrorsType = Record<string, string>;
+
+export type GetStepsFunc = (
+  inputHandleChange: ChangeEventHandler,
+  formDataValues: unknown,
+  formDataErrors: ErrorsType
+) => StepList;
+
+export type useFormStepperResponse = {
+  navigationActions: NavigationActionsInterface;
+  currentStep: number;
+  steps: StepList;
+};
+
+export const useFormStepper = <T>(
+  inputHandleChange: ChangeEventHandler,
+  formDataValues: T,
+  formDataErrors: ErrorsType,
+  getStepsFunc: GetStepsFunc
+): useFormStepperResponse => {
+  const [currentStep, setCurrentStep] = useState<number>(0);
+  const [steps, setSteps] = useState<StepList>(null);
+  const totalSteps = useRef<number>(0);
+
+  useEffect(() => {
+    const loadedSteps = getStepsFunc(inputHandleChange, formDataValues, formDataErrors);
+    setSteps(loadedSteps);
+  }, [getStepsFunc, inputHandleChange, formDataValues, formDataErrors]);
+
+  const gotoPrev = (): void => {
     if (currentStep > 0) {
       setCurrentStep((prev: number) => prev + 1);
     }
   };
 
-  const gotoNext = () => {
+  const gotoNext = (): void => {
     setCurrentStep((prev: number) => prev + 1);
   };
 
-  const isFirst = () => {
+  const isFirst = (): boolean => {
     return currentStep === 0;
   };
 
-  const isLast = () => {
-    return currentStep === totalSteps - 1;
+  const isLast = (): boolean => {
+    return currentStep === totalSteps.current - 1;
   };
 
   const hasPrev = (): boolean => {
-    return currentStep > 0;
+    return currentStep.current > 0;
   };
 
   const hasNext = (): boolean => {
-    return currentStep < totalSteps - 1;
+    return currentStep < totalSteps.current - 1;
   };
 
   const navigationActions: NavigationActionsInterface = {
-    hasPrev,
-    hasNext,
-    isFirst,
-    isLast,
-    gotoNext,
-    gotoPrev,
+    hasPrev: hasPrev,
+    hasNext: hasNext,
+    isFirst: isFirst,
+    isLast: isLast,
+    gotoNext: gotoNext,
+    gotoPrev: gotoPrev,
   };
 
   return {
     navigationActions: navigationActions,
     currentStep: currentStep,
-    formData: formData,
-    setFormData: setFormData,
+    steps,
   };
 };

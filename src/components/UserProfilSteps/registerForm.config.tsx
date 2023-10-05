@@ -1,5 +1,4 @@
-import { InputDataFieldType } from "../../ui/Form/InputFields/inputDataField.type";
-
+import { InputDataFieldType } from '../ui/Form/InputFields/inputDataField.type';
 
 type InputValuesType = { [key: string]: string | number | boolean };
 type InputErrorsType = { [key: string]: string };
@@ -33,21 +32,6 @@ export const getRegisterFormConfig = (values: InputValuesType, errors: InputErro
         minLength: 6,
       },
       messageError: errors['password'],
-    },
-    {
-      id: 'register-repeatPassword',
-      name: 'repeatPassword',
-      type: 'password',
-      label: 'Confirmer le Mot de passe',
-      placeholder: 'Entrez votre mot de passe',
-      value: values['repeatPassword'],
-      hasRef: false,
-      isUncontrolled: true,
-      customOptions: {
-        required: true,
-        minLength: 8,
-      },
-      messageError: errors['repeatPassword'],
     },
   ];
 };

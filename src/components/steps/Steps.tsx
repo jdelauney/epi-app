@@ -2,7 +2,7 @@ import { useState, useEffect, ChangeEvent } from 'react';
 import { NavigationActionsInterface } from '../../hooks/useFormStepper';
 import { ProgressBar } from '../ui/ProgressBar/ProgessBar';
 import { StepList } from './steps.type';
-import { StepperForm } from '../ui/StepperForm/StepperForm';
+import { StepperForm } from './StepperForm/StepperForm';
 
 type StepsProps = {
   steps: StepList;

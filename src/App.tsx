@@ -1,5 +1,4 @@
 import { Steps } from './components/steps/Steps';
-import { trySteps } from './components/steps/tryStep';
 import { Button } from './components/ui/Button/Button';
 import epiLogo from '/images/EPI_logo.png';
 
