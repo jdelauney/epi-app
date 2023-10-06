@@ -1,3 +1,4 @@
+import { UseProfileSteps } from './components/UserProfilSteps/UseProfileSteps';
 import { Steps } from './components/steps/Steps';
 import { Button } from './components/ui/Button/Button';
 import epiLogo from '/images/EPI_logo.png';
@@ -24,8 +25,7 @@ const App = () => {
       </header>
 
       <section>
-        <Steps currentStep={3} steps={trySteps} />
-        <Button>Enregistrer</Button>
+        <UseProfileSteps />
       </section>
     </>
   );

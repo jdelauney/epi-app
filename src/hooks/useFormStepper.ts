@@ -12,9 +12,9 @@ export interface NavigationActionsInterface {
 
 export type ErrorsType = Record<string, string>;
 
-export type GetStepsFunc = (
+export type GetStepsFunc<T> = (
   inputHandleChange: ChangeEventHandler,
-  formDataValues: unknown,
+  formDataValues: T,
   formDataErrors: ErrorsType
 ) => StepList;
 
@@ -24,24 +24,37 @@ export type useFormStepperResponse = {
   steps: StepList;
 };
 
-export const useFormStepper = <T>(
-  inputHandleChange: ChangeEventHandler,
-  formDataValues: T,
-  formDataErrors: ErrorsType,
-  getStepsFunc: GetStepsFunc
-): useFormStepperResponse => {
+export function useFormStepper<T>({
+  inputHandleChange,
+  formDataValues,
+  formDataErrors,
+  getStepsFunc,
+}: {
+  inputHandleChange: ChangeEventHandler;
+  formDataValues: T;
+  formDataErrors: ErrorsType;
+  getStepsFunc: GetStepsFunc<T>;
+}): useFormStepperResponse {
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [steps, setSteps] = useState<StepList>(null);
+  const [steps, setSteps] = useState<StepList>([]);
   const totalSteps = useRef<number>(0);
 
   useEffect(() => {
-    const loadedSteps = getStepsFunc(inputHandleChange, formDataValues, formDataErrors);
-    setSteps(loadedSteps);
-  }, [getStepsFunc, inputHandleChange, formDataValues, formDataErrors]);
+    const loadSteps = async (): Promise<StepList> => {
+      return getStepsFunc(inputHandleChange, formDataValues, formDataErrors);
+    };
+
+    loadSteps().then(steps => {
+      totalSteps.current = steps.length;
+      setSteps([...steps]);
+    });
+  }, []);
+
+  //
 
   const gotoPrev = (): void => {
     if (currentStep > 0) {
-      setCurrentStep((prev: number) => prev + 1);
+      setCurrentStep((prev: number) => prev - 1);
     }
   };
 
@@ -58,7 +71,7 @@ export const useFormStepper = <T>(
   };
 
   const hasPrev = (): boolean => {
-    return currentStep.current > 0;
+    return currentStep > 0;
   };
 
   const hasNext = (): boolean => {
@@ -79,4 +92,4 @@ export const useFormStepper = <T>(
     currentStep: currentStep,
     steps,
   };
-};
+}

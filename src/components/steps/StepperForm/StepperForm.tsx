@@ -22,10 +22,19 @@ export const StepperForm = forwardRef(
     };
 
     useEffect(() => {
-      const getCurrentStep = (): ReactNode => {
-        return steps[currentStep].content;
+      const getCurrentStep = async (): Promise<ReactNode> => {
+        // Suppose loadSteps is your asynchronous function that loads the data
+
+        if (steps && steps[currentStep]) {
+          return steps[currentStep].content;
+        } else {
+          return null;
+        }
       };
-      currentStepElementRef.current = getCurrentStep();
+
+      getCurrentStep().then(content => {
+        currentStepElementRef.current = content;
+      });
     }, [currentStep, steps]);
 
     return (

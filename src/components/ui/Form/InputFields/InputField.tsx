@@ -1,8 +1,8 @@
-import { InputDataFieldType } from './inputDataField.type.ts';
 import { ChangeEvent, forwardRef, PropsWithChildren, ReactNode } from 'react';
-import { InputTextProvider } from './providers/InputTextProvider.tsx';
-import { TextareaProvider } from './providers/TextareaProvider.tsx';
-import { FormGroup } from '../FormGroup/FormGroup.tsx';
+import { FormGroup } from '../FormGroup/FormGroup';
+import { InputDataFieldType } from './inputDataField.type';
+import { InputTextProvider } from './providers/InputTextProvider';
+import { TextareaProvider } from './providers/TextareaProvider';
 
 type InputFieldProps = PropsWithChildren<{
   inputDataField: InputDataFieldType;

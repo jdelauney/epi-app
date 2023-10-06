@@ -14,7 +14,19 @@ export const Steps = ({ steps, currentStep, navigationActions, onSubmit }: Steps
   const [stepTitle, setStepTitle] = useState('');
 
   useEffect(() => {
-    setStepTitle(steps[currentStep].title);
+    const getCurrentStep = async (): Promise<string> => {
+      // Suppose loadSteps is your asynchronous function that loads the data
+
+      if (steps && steps[currentStep]) {
+        return steps[currentStep].title;
+      } else {
+        return '';
+      }
+    };
+
+    getCurrentStep().then(title => {
+      setStepTitle(title);
+    });
   }, [currentStep, steps]);
 
   return (

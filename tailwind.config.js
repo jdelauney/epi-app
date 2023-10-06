@@ -30,7 +30,7 @@ export default {
       variants: ['hover', 'focus', 'active', 'disabled'],
     },
     {
-      pattern: /(mt|mb|mr|ml|my|mx|px|py|pt|pb|pl|pr)-[0-9]+/,
+      pattern: /(mt|mb|mr|ml|my|mx|px|py|pt|pb|pl|pr|m|p)-[0-9]+/,
     },
     {
       pattern: /flex.*/,

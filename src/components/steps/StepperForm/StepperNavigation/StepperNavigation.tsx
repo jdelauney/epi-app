@@ -1,5 +1,5 @@
 import { NavigationActionsInterface } from '../../../../hooks/useFormStepper';
-import { Button } from '../../Button/Button';
+import { Button } from '../../../ui/Button/Button';
 
 type StepperNavigationProps = {
   navigationActions: NavigationActionsInterface;
@@ -12,7 +12,6 @@ export const StepperNavigation = ({ navigationActions, onPrev, onNext, onComplet
   const { hasPrev, hasNext, isLast, gotoPrev, gotoNext } = navigationActions;
 
   const handlePrevClick = () => {
-    console.log('prev click');
     gotoPrev();
     if (onPrev) {
       onPrev();
@@ -20,7 +19,6 @@ export const StepperNavigation = ({ navigationActions, onPrev, onNext, onComplet
   };
 
   const handleNextClick = () => {
-    console.log('next click');
     gotoNext();
     if (onNext) {
       onNext();

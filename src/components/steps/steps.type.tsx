@@ -5,4 +5,4 @@ export type StepItem = {
   content: ReactNode;
 };
 
-export type StepList = StepItem[] | null;
+export type StepList = StepItem[];

@@ -9,19 +9,12 @@ export const ProgressBar = ({ currentStep, totalSteps }: ProgressBarProps) => {
 
   useEffect(() => {
     const computeProgressPercent = () => {
-      return Math.floor((currentStep * 100) / totalSteps);
+      return Math.floor(((currentStep + 1) * 100) / totalSteps);
     };
 
     const progression = computeProgressPercent();
-    console.log(progression);
     setProgressValue(progression);
   }, [currentStep, totalSteps]);
-
-  const getStyle = (): CSSProperties => {
-    return {
-      width: `${progressValue}%`,
-    };
-  };
 
   return (
     <div className={'w-full bg-gray-700 h-6 border-4 border-gray-500'}>

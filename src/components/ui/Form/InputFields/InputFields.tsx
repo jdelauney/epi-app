@@ -1,6 +1,7 @@
 import { HTMLAttributes, forwardRef, ChangeEvent } from 'react';
-import { InputField } from './InputField.tsx';
-import { InputDataFieldType } from './inputDataField.type.ts';
+import { InputDataFieldType } from './inputDataField.type';
+import { InputField } from './InputField';
+
 
 type InputFieldsProps = {
   fields: InputDataFieldType[];

@@ -3,36 +3,25 @@ import { StepList } from '../steps/steps.type';
 import { InputDataFieldType } from '../ui/Form/InputFields/inputDataField.type';
 import { ErrorsType } from '../../hooks/useFormStepper';
 import { UserProfilDataType } from './UseProfileSteps';
-import { getRegisterFormConfig } from './registerForm.config';
 import { Step } from '../steps/StepperForm/Step/Step';
+import { getRegisterFormConfig } from './registerForm.config';
+import { getFullnameFormConfig } from './fullnameForm.config';
 
 export const getSteps = (
   inputHandleChange: ChangeEventHandler,
   formDataValues: UserProfilDataType,
   formDataErrors: ErrorsType
 ): StepList => {
-  const stepOneFormDataFields: InputDataFieldType[] = getRegisterFormConfig(formDataValues, formDataErrors);
-
+  const stepOneRegisterFormDataFields: InputDataFieldType[] = getRegisterFormConfig(formDataValues, formDataErrors);
+  const stepTwoFullnameFormDataFields: InputDataFieldType[] = getFullnameFormConfig(formDataValues, formDataErrors);
   return [
     {
-      title: "Bienvenue au cours d'introduction",
-      content: <Step fields={stepOneFormDataFields} onInputChange={inputHandleChange} />,
+      title: 'Enregistrement',
+      content: <Step fields={stepOneRegisterFormDataFields} onInputChange={inputHandleChange} />,
     },
     {
-      title: "Bienvenue au cours d'introduction",
-      content: <Step fields={stepOneFormDataFields} onInputChange={inputHandleChange} />,
-    },
-    {
-      title: "Bienvenue au cours d'introduction",
-      content: <Step fields={stepOneFormDataFields} onInputChange={inputHandleChange} />,
-    },
-    {
-      title: "Bienvenue au cours d'introduction",
-      content: <Step fields={stepOneFormDataFields} onInputChange={inputHandleChange} />,
-    },
-    {
-      title: "Bienvenue au cours d'introduction",
-      content: <Step fields={stepOneFormDataFields} onInputChange={inputHandleChange} />,
+      title: 'Qui êtes-vous ?',
+      content: <Step fields={stepTwoFullnameFormDataFields} onInputChange={inputHandleChange} />,
     },
   ];
 };

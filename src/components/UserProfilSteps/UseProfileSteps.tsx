@@ -1,8 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useFormStepper } from '../../hooks/useFormStepper';
+import { GetStepsFunc, useFormStepper } from '../../hooks/useFormStepper';
 import { Steps } from '../steps/Steps';
 import { z } from 'zod';
 import { extractZodErrorToMessage } from '../../utils/zod';
+import { getSteps } from './steps.config';
 
 const userProfileSchema = z.object({
   email: z.string({ required_error: 'un email est obligatoire' }).email({ message: 'Adresse email invalide' }),
@@ -15,29 +16,41 @@ const userProfileSchema = z.object({
 
 export type UserProfilDataType = z.infer<typeof userProfileSchema>;
 
-export const UseProfileSteps = () => {
-  const initialUserProfileFormData: UserProfilDataType = {
-    email: '',
-    password: '',
-    firstName: '',
-    lastName: '',
-  };
+const initialUserProfileFormData: UserProfilDataType = {
+  email: '',
+  password: '',
+  firstName: '',
+  lastName: '',
+};
 
+export const UseProfileSteps = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('submit', formData);
   };
 
   const [formData, setFormData] = useState<UserProfilDataType>(initialUserProfileFormData);
-  const [errors, setErrors] = useState<Record<string, string>>({ email: '', password: '', repeatPassword: '' });
+  const [errors, setErrors] = useState<Record<string, string>>(initialUserProfileFormData);
 
   const handleInputChange = (e: ChangeEvent) => {
+    console.log('handleInputChange');
     const { name, value } = (e as ChangeEvent<HTMLFormElement>).target;
+    console.log('name == ', name);
+    console.log('Value == ', value);
+
     const newData = { ...formData, [name]: value };
-    setFormData(newData);
+    console.log('newData == ', newData);
+    setFormData(prev => {
+      return {
+        ...prev,
+        ...newData,
+      };
+    });
+
+    //setFormData(newData);
 
     // Validate the field
-    registerSchema
+    userProfileSchema
       .parseAsync(newData)
       .then(() =>
         setErrors(prev => {
@@ -47,20 +60,19 @@ export const UseProfileSteps = () => {
       .catch(error => {
         const newErrors = {
           ...errors,
-          email: extractZodErrorToMessage(error, 'email'),
-          password: extractZodErrorToMessage(error, 'password'),
-          repeatPassword: extractZodErrorToMessage(error, 'repeatPassword'),
+          [name]: extractZodErrorToMessage(error, name),
         };
         setErrors(newErrors);
-        //{ ...errors, [name]: extractZodErrorToMessage(error, name) }
+        //
       });
   };
 
-  const { navigationActions, currentStep, steps } = useFormStepper<UserProfilDataType>(
-    handleInputChange,
-    formData,
-    errors
-  );
+  const { navigationActions, currentStep, steps } = useFormStepper<UserProfilDataType>({
+    inputHandleChange: handleInputChange,
+    formDataValues: { ...formData },
+    formDataErrors: errors,
+    getStepsFunc: getSteps as GetStepsFunc,
+  });
 
   return (
     <Steps steps={steps} currentStep={currentStep} navigationActions={navigationActions} onSubmit={handleSubmit} />
