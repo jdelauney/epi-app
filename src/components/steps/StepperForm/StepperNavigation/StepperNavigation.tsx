@@ -1,4 +1,4 @@
-import { NavigationActionsInterface } from '../../../../hooks/useFormStepper';
+import { NavigationActionsInterface } from '../../../../hooks/useUserProfileFormContext';
 import { Button } from '../../../ui/Button/Button';
 
 type StepperNavigationProps = {

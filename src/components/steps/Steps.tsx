@@ -1,6 +1,6 @@
 import { useState, useEffect, ChangeEvent } from 'react';
-import { NavigationActionsInterface } from '../../hooks/useFormStepper';
-import { ProgressBar } from '../ui/ProgressBar/ProgessBar';
+import { NavigationActionsInterface } from '../../hooks/useUserProfileFormContext';
+import { ProgressBar } from '../ui/ProgressBar/ProgressBar';
 import { StepList } from './steps.type';
 import { StepperForm } from './StepperForm/StepperForm';
 
@@ -17,11 +17,7 @@ export const Steps = ({ steps, currentStep, navigationActions, onSubmit }: Steps
     const getCurrentStep = async (): Promise<string> => {
       // Suppose loadSteps is your asynchronous function that loads the data
 
-      if (steps && steps[currentStep]) {
-        return steps[currentStep].title;
-      } else {
-        return '';
-      }
+      return steps?.[currentStep]?.title ?? '';
     };
 
     getCurrentStep().then(title => {

@@ -1,4 +1,4 @@
-import { UseProfileSteps } from './components/UserProfilSteps/UseProfileSteps';
+import { UseProfileSteps } from './components/UserProfilSteps/UserProfileSteps';
 import { Steps } from './components/steps/Steps';
 import { Button } from './components/ui/Button/Button';
 import epiLogo from '/images/EPI_logo.png';
