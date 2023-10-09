@@ -10,5 +10,6 @@ type StepProps = {
 };
 
 export const Step = ({ fields, onInputChange }: StepProps) => {
+  console.log('Step');
   return <InputFields fields={fields} onInputChange={onInputChange} />;
 };

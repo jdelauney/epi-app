@@ -1,14 +1,11 @@
-import { ChangeEvent } from 'react';
 import { StepList } from '../steps/steps.type';
 import { InputDataFieldType } from '../ui/Form/InputFields/inputDataField.type';
-import { ErrorsType } from '../../hooks/useUserProfileFormContext';
-import { UserProfilDataType } from './UserProfileSteps';
-import { Step } from '../steps/StepperForm/Step/Step';
 import { getRegisterFormConfig } from './registerForm.config';
 import { getFullnameFormConfig } from './fullnameForm.config';
+import { UserProfilDataType, ErrorsType } from '../../contexts/userProfileForm.context';
 
 export const getSteps = (
-  inputHandleChange: (e: ChangeEvent) => void,
+  //inputHandleChange: (e: ChangeEvent) => void,
   formDataValues: UserProfilDataType,
   formDataErrors: ErrorsType
 ): StepList => {
@@ -18,12 +15,12 @@ export const getSteps = (
     {
       id: 'register',
       title: 'Enregistrement',
-      content: <Step fields={stepOneRegisterFormDataFields} onInputChange={inputHandleChange} />,
+      formConfig: stepOneRegisterFormDataFields,
     },
     {
       id: 'fullname',
       title: 'Qui êtes-vous ?',
-      content: <Step fields={stepTwoFullnameFormDataFields} onInputChange={inputHandleChange} />,
+      formConfig: stepTwoFullnameFormDataFields,
     },
   ];
 };

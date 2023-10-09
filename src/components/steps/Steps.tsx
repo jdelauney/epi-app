@@ -1,17 +1,19 @@
 import { useState, useEffect, ChangeEvent } from 'react';
-import { NavigationActionsInterface } from '../../hooks/useUserProfileFormContext';
+import { useUserProfileFormContext } from '../../hooks/useUserProfileFormContext';
 import { ProgressBar } from '../ui/ProgressBar/ProgressBar';
-import { StepList } from './steps.type';
 import { StepperForm } from './StepperForm/StepperForm';
 
 type StepsProps = {
-  steps: StepList;
+  /*steps: StepList;
   currentStep: number;
-  navigationActions: NavigationActionsInterface;
+  navigationActions: NavigationActionsInterface; */
+  onInputChange: (e: ChangeEvent) => void;
   onSubmit: (e: ChangeEvent<HTMLFormElement>) => void;
 };
-export const Steps = ({ steps, currentStep, navigationActions, onSubmit }: StepsProps) => {
+export const Steps = ({ onInputChange, onSubmit }: StepsProps) => {
+  console.log('Steps');
   const [stepTitle, setStepTitle] = useState('');
+  const { steps, currentStep } = useUserProfileFormContext();
 
   useEffect(() => {
     const getCurrentStep = async (): Promise<string> => {
@@ -27,9 +29,9 @@ export const Steps = ({ steps, currentStep, navigationActions, onSubmit }: Steps
 
   return (
     <section className={'flex flex-col gap-3'}>
-      <ProgressBar totalSteps={steps.length} currentStep={currentStep} />
+      <ProgressBar />
       <h2 className={'text-3xl md:text-5xl font-serif text-center mt-5'}>{stepTitle}</h2>
-      <StepperForm steps={steps} currentStep={currentStep} navigationActions={navigationActions} onSubmit={onSubmit} />
+      <StepperForm onInputChange={onInputChange} onSubmit={onSubmit} />
     </section>
   );
 };

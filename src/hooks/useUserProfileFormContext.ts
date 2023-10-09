@@ -62,6 +62,7 @@ export const useUserProfileFormContext = () => {
     setFormDataErrors: setFormDataErrors,
     steps: steps,
     currentStep: currentStep,
+    totalSteps: totalSteps,
     navigationActions: navigationActions,
   };
 };

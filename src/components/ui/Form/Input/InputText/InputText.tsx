@@ -8,7 +8,8 @@ export type InputTextProps = {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 } & InputHTMLAttributes<HTMLInputElement>;
 export const InputText = forwardRef(
-  ({ type, name, className, placeholder, onChange, ...restOfProps }: InputTextProps, ref) => {
+  ({ type, name, className, placeholder, onChange, label, ...restOfProps }: InputTextProps, ref) => {
+    console.log('Rest of props : ', restOfProps);
     return (
       <>
         <input

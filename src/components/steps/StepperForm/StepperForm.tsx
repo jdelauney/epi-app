@@ -1,27 +1,27 @@
-import { ChangeEvent, forwardRef, HTMLAttributes, ReactNode, useEffect, useRef } from 'react';
+import { ChangeEvent, forwardRef, HTMLAttributes } from 'react';
 import { StepperNavigation } from './StepperNavigation/StepperNavigation';
-import { StepList } from '../../steps/steps.type';
-import { NavigationActionsInterface } from '../../../hooks/useUserProfileFormContext';
+import { useUserProfileFormContext } from '../../../hooks/useUserProfileFormContext';
+import { Step } from './Step/Step';
 
 type FormProps = {
   className?: string;
-  steps: StepList;
+  /*steps: StepList;
   currentStep: number;
-  navigationActions: NavigationActionsInterface;
-  //onInputChange: (e: ChangeEvent) => void;
+  navigationActions: NavigationActionsInterface;*/
+  onInputChange: (e: ChangeEvent) => void;
   onSubmit: (e: ChangeEvent<HTMLFormElement>) => void;
 } & HTMLAttributes<HTMLFormElement>;
 
-export const StepperForm = forwardRef(
-  ({ className, steps, currentStep, navigationActions, onSubmit, ...restOfProps }: FormProps, ref) => {
-    //const currentStepElementRef = useRef<ReactNode>(null);
+export const StepperForm = forwardRef(({ className, onInputChange, onSubmit, ...restOfProps }: FormProps, ref) => {
+  const { steps, currentStep } = useUserProfileFormContext();
+  console.log('StepperForm');
 
-    const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      onSubmit(e);
-    };
+  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSubmit(e);
+  };
 
-    /* useEffect(() => {
+  /* useEffect(() => {
       const getCurrentStep = async (): Promise<ReactNode> => {
         // Suppose loadSteps is your asynchronous function that loads the data
 
@@ -37,19 +37,22 @@ export const StepperForm = forwardRef(
       });
     }, [currentStep, steps]);*/
 
-    return (
-      <form className={className} onSubmit={handleSubmit} {...restOfProps}>
-        {/* {currentStepElementRef.current} */}
-        {steps.map((step, index) => {
-          return (
-            <div key={'step-' + step.id} className={currentStep === index ? 'block' : 'hidden'}>
-              {step.content}
-            </div>
-          );
-        })}
-        <StepperNavigation navigationActions={navigationActions} />
-      </form>
-    );
-  }
-);
+  return (
+    <form className={className} onSubmit={handleSubmit} {...restOfProps}>
+      {/* {currentStepElementRef.current} */}
+      {steps.map((step, index) => {
+        return (
+          <div key={'step-' + step.id} className={currentStep === index ? 'block' : 'hidden'}>
+            {step.formConfig ? (
+              <Step fields={step.formConfig} onInputChange={onInputChange} />
+            ) : step.element ? (
+              step.element
+            ) : null}
+          </div>
+        );
+      })}
+      <StepperNavigation />
+    </form>
+  );
+});
 StepperForm.displayName = 'StepperForm';

@@ -1,5 +1,5 @@
-import { InputText } from '../../Input/InputText/InputText.tsx';
-import { InputDataFieldType } from '../inputDataField.type.ts';
+import { InputText } from '../../Input/InputText/InputText';
+import { InputDataFieldType } from '../inputDataField.type';
 import { ChangeEvent, ForwardedRef } from 'react';
 
 export const InputTextProvider = (
@@ -21,7 +21,7 @@ export const InputTextProvider = (
       {...valueProp}
       //value={value as string}
       ref={hasRef ? ref : undefined}
-      onInput={onInputChange}
+      onChange={onInputChange}
     />
   );
 };

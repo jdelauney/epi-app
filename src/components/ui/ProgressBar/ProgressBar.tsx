@@ -1,11 +1,13 @@
 import { CSSProperties, useEffect, useState } from 'react';
+import { useUserProfileFormContext } from '../../../hooks/useUserProfileFormContext';
 
-type ProgressBarProps = {
+/*type ProgressBarProps = {
   currentStep: number;
   totalSteps: number;
-};
-export const ProgressBar = ({ currentStep, totalSteps }: ProgressBarProps) => {
+};*/
+export const ProgressBar = () => {
   const [progressValue, setProgressValue] = useState<number>(0);
+  const { totalSteps, currentStep} = useUserProfileFormContext();
 
   useEffect(() => {
     const computeProgressPercent = () => {

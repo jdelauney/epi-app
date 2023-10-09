@@ -6,7 +6,8 @@ export type InputDataFieldType = {
   type: string;
   label: string;
   placeholder?: string;
-  value: string | number | boolean;
+  value?: string | number | boolean;
+  defaultValue?: string | number | boolean;
   Icon?: ReactNode;
   customOptions?: { [key: string]: string | number | boolean };
   hasRef?: boolean;

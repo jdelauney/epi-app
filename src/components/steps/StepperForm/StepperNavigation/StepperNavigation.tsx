@@ -1,14 +1,15 @@
-import { NavigationActionsInterface } from '../../../../hooks/useUserProfileFormContext';
+import { NavigationActionsInterface, useUserProfileFormContext } from '../../../../hooks/useUserProfileFormContext';
 import { Button } from '../../../ui/Button/Button';
 
 type StepperNavigationProps = {
-  navigationActions: NavigationActionsInterface;
+  // navigationActions: NavigationActionsInterface;
   onNext?: () => void;
   onPrev?: () => void;
   onComplete?: () => void;
 };
 
-export const StepperNavigation = ({ navigationActions, onPrev, onNext, onComplete }: StepperNavigationProps) => {
+export const StepperNavigation = ({ onPrev, onNext, onComplete }: StepperNavigationProps) => {
+  const { navigationActions } = useUserProfileFormContext();
   const { hasPrev, hasNext, isLast, gotoPrev, gotoNext } = navigationActions;
 
   const handlePrevClick = () => {

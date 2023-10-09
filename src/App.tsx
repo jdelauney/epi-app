@@ -1,9 +1,9 @@
-import { UseProfileSteps } from './components/UserProfilSteps/UserProfileSteps';
-import { Steps } from './components/steps/Steps';
-import { Button } from './components/ui/Button/Button';
+import { UserProfileSteps } from './components/UserProfilSteps/UserProfileSteps';
 import epiLogo from '/images/EPI_logo.png';
 
 const App = () => {
+
+  
   return (
     <>
       <header className={'flex w-full h-28'}>
@@ -25,7 +25,7 @@ const App = () => {
       </header>
 
       <section>
-        <UseProfileSteps />
+        <UserProfileSteps />
       </section>
     </>
   );
