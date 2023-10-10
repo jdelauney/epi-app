@@ -23,7 +23,7 @@ const App = () => {
         </div>
       </header>
 
-      <section>
+      <section className={'flex flex-col grow'}>
         <UserProfilFormContextProvider>
           <UserProfileSteps />
         </UserProfilFormContextProvider>

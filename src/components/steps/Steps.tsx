@@ -27,7 +27,7 @@ export const Steps = ({ onInputChange, onSubmit }: StepsProps) => {
   }, [currentStep, steps]);
 
   return (
-    <section className={'flex flex-col gap-3'}>
+    <section className={'flex flex-col grow gap-3'}>
       <ProgressBar />
       <h2 className={'text-3xl md:text-5xl font-serif text-center mt-5'}>{stepTitle}</h2>
       <StepperForm onInputChange={onInputChange} onSubmit={onSubmit} />

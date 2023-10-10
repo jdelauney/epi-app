@@ -33,7 +33,7 @@ const INITIAL_USER_PROFILE_FORMDATA_ERRORS: ErrorsType = {
 export const UserProfilFormContextProvider = ({ children }: PropsWithChildren) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<UserProfilDataType>({
-    email: 'test@test.com',
+    email: '',
     password: '',
     firstName: '',
     lastName: '',
@@ -52,15 +52,11 @@ export const UserProfilFormContextProvider = ({ children }: PropsWithChildren) =
 
   useEffect(() => {
     const loadSteps = async (): Promise<StepList> => {
-      console.log('steps');
-      //setFormData(INITIAL_USER_PROFILE_FORMDATA);
-      //setFormDataErrors(INITIAL_USER_PROFILE_FORMDATA_ERRORS);
       return getSteps({ ...formData }, { ...formDataErrors });
     };
 
     if (!isReady) {
       loadSteps().then(steps => {
-        console.log('Steps ===> ', steps);
         totalSteps.current = steps.length;
         setSteps([...steps]);
         setIsReady(true);

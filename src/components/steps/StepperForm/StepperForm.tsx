@@ -16,8 +16,6 @@ type FormProps = {
 export const StepperForm = forwardRef(({ className, onInputChange, onSubmit, ...restOfProps }: FormProps, ref) => {
   const { steps, currentStep, formData, formDataErrors } = useUserProfileFormContext();
 
-  console.log('StepperForm ==> ', formData);
-
   const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit(e);
@@ -46,7 +44,11 @@ export const StepperForm = forwardRef(({ className, onInputChange, onSubmit, ...
     return result;
   };
   return (
-    <form className={className} onSubmit={handleSubmit} {...restOfProps}>
+    <form
+      className={`flex flex-col justify-between grow ${className && className}`}
+      onSubmit={handleSubmit}
+      {...restOfProps}
+    >
       {/* {currentStepElementRef.current} */}
       {steps!.map((step, index) => {
         return (

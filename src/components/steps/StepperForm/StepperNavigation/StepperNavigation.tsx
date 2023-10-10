@@ -32,8 +32,13 @@ export const StepperNavigation = ({ onPrev, onNext, onComplete }: StepperNavigat
       onComplete();
     }
   };
+
+  const footerStyle: string = `flex p-6 border-t border-gray-200 ${
+    hasPrev() || isLast() ? 'justify-between' : 'justify-end'
+  }`;
+
   return (
-    <footer className={'flex justify-between p-3'}>
+    <footer className={footerStyle}>
       {hasPrev() && <Button onClick={handlePrevClick}>Retour</Button>}
       {hasNext() && <Button onClick={handleNextClick}>Suivant</Button>}
       {isLast() && (

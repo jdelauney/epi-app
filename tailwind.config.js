@@ -33,10 +33,10 @@ export default {
       pattern: /(mt|mb|mr|ml|my|mx|px|py|pt|pb|pl|pr|m|p)-[0-9]+/,
     },
     {
-      pattern: /flex.*/,
+      pattern: /(flex.*|grow)/,
     },
     {
-      patterb: /hidden/,
+      pattern: /hidden/,
     },
     {
       pattern: /grid.*/,

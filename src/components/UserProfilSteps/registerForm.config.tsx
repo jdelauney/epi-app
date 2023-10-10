@@ -17,7 +17,6 @@ export const getRegisterFormConfig = (values: UserProfilDataType, errors: Errors
       customOptions: {
         required: true,
       },
-      messageHelp: 'Un email de validation vous sera envoyé',
       messageError: errors['email'],
     },
     {
