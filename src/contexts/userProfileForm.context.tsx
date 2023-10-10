@@ -1,6 +1,7 @@
-import { Dispatch, PropsWithChildren, SetStateAction, createContext } from 'react';
+import { Dispatch, PropsWithChildren, SetStateAction, createContext, useEffect, useRef, useState } from 'react';
 import { StepList } from '../components/steps/steps.type';
 import { UserProfilDataType, ErrorsType } from '../components/UserProfilSteps/userProfilesSteps.types';
+import { getSteps } from '../components/UserProfilSteps/steps.config';
 
 export type UserProfileFormContextType = {
   formData: UserProfilDataType;
@@ -15,37 +16,73 @@ export type UserProfileFormContextType = {
 
 export const UserProfileFormContext = createContext<UserProfileFormContextType | null>(null);
 
-export const UserProfilFormContextProvider = ({children}: PropsWithChildren) => {
+const INITIAL_USER_PROFILE_FORMDATA: UserProfilDataType = {
+  email: '',
+  password: '',
+  firstName: '',
+  lastName: '',
+};
+
+const INITIAL_USER_PROFILE_FORMDATA_ERRORS: ErrorsType = {
+  email: '',
+  password: '',
+  firstName: '',
+  lastName: '',
+};
+
+export const UserProfilFormContextProvider = ({ children }: PropsWithChildren) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<UserProfilDataType>({
+    email: 'test@test.com',
+    password: '',
+    firstName: '',
+    lastName: '',
+  });
+  const [formDataErrors, setFormDataErrors] = useState<ErrorsType>({
     email: '',
     password: '',
     firstName: '',
     lastName: '',
   });
-  const [formDataErrors, setFormDataErrors] = useState<ErrorsType>(INITIAL_USER_PROFILE_FORMDATA_ERRORS);
+  //const stepsConfig = getSteps(formData, formDataErrors);
   const [steps, setSteps] = useState<StepList | null>(null);
   const [isReady, setIsReady] = useState<boolean>(false);
 
   const totalSteps = useRef<number>(0);
 
-
-  const userProfileFormContextValue: UserProfileFormContextType = useMemo(() => {
-    return {
-      formData: formData,
-      setFormData: setFormData,
-      formDataErrors: formDataErrors,
-      setFormDataErrors: setFormDataErrors,
-      steps: steps,
-      currentStep: currentStep,
-      setCurrentStep: setCurrentStep,
-      totalSteps: totalSteps.current,
+  useEffect(() => {
+    const loadSteps = async (): Promise<StepList> => {
+      console.log('steps');
+      //setFormData(INITIAL_USER_PROFILE_FORMDATA);
+      //setFormDataErrors(INITIAL_USER_PROFILE_FORMDATA_ERRORS);
+      return getSteps({ ...formData }, { ...formDataErrors });
     };
-  }, [formData, setFormData, formDataErrors, setFormDataErrors, steps, currentStep, setCurrentStep]);
 
+    if (!isReady) {
+      loadSteps().then(steps => {
+        console.log('Steps ===> ', steps);
+        totalSteps.current = steps.length;
+        setSteps([...steps]);
+        setIsReady(true);
+      });
+    }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const userProfileFormContextValue: UserProfileFormContextType = {
+    formData: formData,
+    setFormData: setFormData,
+    formDataErrors: formDataErrors,
+    setFormDataErrors: setFormDataErrors,
+    steps: steps,
+    currentStep: currentStep,
+    setCurrentStep: setCurrentStep,
+    totalSteps: totalSteps.current,
+  };
+
+  //[formData, setFormData, formDataErrors, setFormDataErrors, steps, currentStep, setCurrentStep]);
   return (
-<UserProfileFormContext.Provider value={userProfileFormContextValue}>
-  )
-
-}
+    <UserProfileFormContext.Provider value={userProfileFormContextValue}>{children}</UserProfileFormContext.Provider>
+  );
+};

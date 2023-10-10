@@ -1,9 +1,8 @@
 import { UserProfileSteps } from './components/UserProfilSteps/UserProfileSteps';
+import { UserProfilFormContextProvider } from './contexts/userProfileForm.context';
 import epiLogo from '/images/EPI_logo.png';
 
 const App = () => {
-
-  
   return (
     <>
       <header className={'flex w-full h-28'}>
@@ -25,7 +24,9 @@ const App = () => {
       </header>
 
       <section>
-        <UserProfileSteps />
+        <UserProfilFormContextProvider>
+          <UserProfileSteps />
+        </UserProfilFormContextProvider>
       </section>
     </>
   );

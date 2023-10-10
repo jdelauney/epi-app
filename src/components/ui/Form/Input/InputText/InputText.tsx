@@ -8,8 +8,12 @@ export type InputTextProps = {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 } & InputHTMLAttributes<HTMLInputElement>;
 export const InputText = forwardRef(
-  ({ type, name, className, placeholder, onChange, label, ...restOfProps }: InputTextProps, ref) => {
-    console.log('Rest of props : ', restOfProps);
+  ({ type, name, className, placeholder, onChange, ...restOfProps }: InputTextProps, ref) => {
+    const fireOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+      if (onChange) {
+        onChange(e);
+      }
+    };
     return (
       <>
         <input
@@ -18,7 +22,7 @@ export const InputText = forwardRef(
           type={type}
           name={name}
           placeholder={placeholder}
-          onChange={onChange}
+          onChange={fireOnChange}
           ref={ref ? (ref as ForwardedRef<HTMLInputElement>) : undefined}
           {...restOfProps}
         />

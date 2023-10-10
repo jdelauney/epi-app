@@ -9,8 +9,8 @@ type InputFieldProps = PropsWithChildren<{
   onInputChange: (e: ChangeEvent) => void;
 }>;
 export const InputField = forwardRef(({ inputDataField, onInputChange, children }: InputFieldProps, ref) => {
-  const { type, label, name } = inputDataField;
-  const { messageHelp, messageError, ...dataField } = inputDataField;
+  const { type, name } = inputDataField;
+  const { messageHelp, messageError, label, ...dataField } = inputDataField;
   let inputElement: ReactNode;
   switch (type) {
     case 'text':

@@ -11,7 +11,6 @@ type StepsProps = {
   onSubmit: (e: ChangeEvent<HTMLFormElement>) => void;
 };
 export const Steps = ({ onInputChange, onSubmit }: StepsProps) => {
-  console.log('Steps');
   const [stepTitle, setStepTitle] = useState('');
   const { steps, currentStep } = useUserProfileFormContext();
 

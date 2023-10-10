@@ -3,7 +3,7 @@ import { InputDataFieldType } from '../inputDataField.type';
 import { ChangeEvent, ForwardedRef } from 'react';
 
 export const InputTextProvider = (
-  dataField: InputDataFieldType,
+  dataField: Omit<InputDataFieldType, 'label'>,
   onInputChange: (e: ChangeEvent<HTMLInputElement>) => void,
   ref: ForwardedRef<unknown>
 ) => {

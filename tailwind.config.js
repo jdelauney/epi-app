@@ -36,6 +36,9 @@ export default {
       pattern: /flex.*/,
     },
     {
+      patterb: /hidden/,
+    },
+    {
       pattern: /grid.*/,
     },
     {

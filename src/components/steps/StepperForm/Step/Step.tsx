@@ -10,6 +10,6 @@ type StepProps = {
 };
 
 export const Step = ({ fields, onInputChange }: StepProps) => {
-  console.log('Step');
+  console.log('STEP ==== ', fields);
   return <InputFields fields={fields} onInputChange={onInputChange} />;
 };

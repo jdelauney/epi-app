@@ -1,9 +1,9 @@
-import { InputDataFieldType } from '../inputDataField.type.ts';
+import { InputDataFieldType } from '../inputDataField.type';
 import { ChangeEvent, ForwardedRef } from 'react';
-import { Textarea } from '../../Input/Textarea/Textarea.tsx';
+import { Textarea } from '../../Input/Textarea/Textarea';
 
 export const TextareaProvider = (
-  dataField: InputDataFieldType,
+  dataField: Omit<InputDataFieldType, 'label' | 'messageError' | 'messageHelp'>,
   onInputChange: (e: ChangeEvent<HTMLTextAreaElement>) => void,
   ref: ForwardedRef<unknown>
 ) => {

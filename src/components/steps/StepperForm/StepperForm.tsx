@@ -2,6 +2,7 @@ import { ChangeEvent, forwardRef, HTMLAttributes } from 'react';
 import { StepperNavigation } from './StepperNavigation/StepperNavigation';
 import { useUserProfileFormContext } from '../../../hooks/useUserProfileFormContext';
 import { Step } from './Step/Step';
+import { InputDataFieldType } from '../../ui/Form/InputFields/inputDataField.type';
 
 type FormProps = {
   className?: string;
@@ -13,8 +14,9 @@ type FormProps = {
 } & HTMLAttributes<HTMLFormElement>;
 
 export const StepperForm = forwardRef(({ className, onInputChange, onSubmit, ...restOfProps }: FormProps, ref) => {
-  const { steps, currentStep } = useUserProfileFormContext();
-  console.log('StepperForm');
+  const { steps, currentStep, formData, formDataErrors } = useUserProfileFormContext();
+
+  console.log('StepperForm ==> ', formData);
 
   const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,14 +39,20 @@ export const StepperForm = forwardRef(({ className, onInputChange, onSubmit, ...
       });
     }, [currentStep, steps]);*/
 
+  const updateInputValues = (formConfig: InputDataFieldType[]): InputDataFieldType[] => {
+    const result: InputDataFieldType[] = formConfig.map((input: InputDataFieldType) => {
+      return { ...input, value: formData[input.name], messageError: formDataErrors[input.name] };
+    });
+    return result;
+  };
   return (
     <form className={className} onSubmit={handleSubmit} {...restOfProps}>
       {/* {currentStepElementRef.current} */}
-      {steps.map((step, index) => {
+      {steps!.map((step, index) => {
         return (
           <div key={'step-' + step.id} className={currentStep === index ? 'block' : 'hidden'}>
             {step.formConfig ? (
-              <Step fields={step.formConfig} onInputChange={onInputChange} />
+              <Step fields={updateInputValues(step.formConfig)} onInputChange={onInputChange} />
             ) : step.element ? (
               step.element
             ) : null}

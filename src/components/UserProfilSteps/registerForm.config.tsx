@@ -1,9 +1,10 @@
 import { InputDataFieldType } from '../ui/Form/InputFields/inputDataField.type';
+import { UserProfilDataType, ErrorsType } from './userProfilesSteps.types';
 
-type InputValuesType = { [key: string]: string | number | boolean };
-type InputErrorsType = { [key: string]: string };
+/*type InputValuesType = { [key: string]: string | number | boolean };
+type InputErrorsType = { [key: string]: string };*/
 
-export const getRegisterFormConfig = (values: InputValuesType, errors: InputErrorsType): InputDataFieldType[] => {
+export const getRegisterFormConfig = (values: UserProfilDataType, errors: ErrorsType): InputDataFieldType[] => {
   return [
     {
       id: 'register-email',
